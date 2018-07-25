@@ -79,8 +79,6 @@ stasis.register_chamber = function(name, def)
           stasis.frozen_players[victim] then
             stasis.unfreeze_player(victim)
         end
-        
-        return false
     end
     
     active_def.can_dig = function(pos, player)
