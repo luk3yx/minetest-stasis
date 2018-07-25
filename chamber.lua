@@ -117,10 +117,10 @@ stasis.register_chamber('stasis:chamber', {
         meta:set_string('infotext', 'Stasis chamber')
     end,
     
-    on_rightclick = function(pos, node, player)
-        if not minetest.get_player_privs(player:get_player_name()).privs then
-            minetest.chat_send_player(player:get_player_name(), 'Permission denied!')
-            return true
-        end
-    end,
+    --on_rightclick = function(pos, node, player)
+    --    if not minetest.get_player_privs(player:get_player_name()).privs then
+    --        minetest.chat_send_player(player:get_player_name(), 'Permission denied!')
+    --        return true
+    --    end
+    --end,
 })
