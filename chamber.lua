@@ -56,6 +56,11 @@ stasis.register_chamber = function(name, def)
         active_def[key] = value
     end
     
+    active_def.groups = {}
+    for key, value in pairs(def.groups) do
+        active_def.groups[key] = value
+    end
+    
     if def.tiles_active then
         active_def.tiles = def.tiles_active
     end

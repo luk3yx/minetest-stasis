@@ -147,7 +147,7 @@ minetest.register_node('stasis:player', {
     description = 'Player in stasis',
     stack_max = 1,
     tiles = {'player.png^default_glass.png'},
-    groups = {dig_immediate = 3},
+    groups = {dig_immediate = 3, not_in_creative_inventory = 1},
     paramtype2 = 'facedir',
     
     after_place_node = function(pos, placer, itemstack)
