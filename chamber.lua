@@ -75,7 +75,8 @@ stasis.register_chamber = function(name, def)
         
         minetest.swap_node(pos, {name = name, param2 = node.param2})
         
-        if victim and #victim > 0 and stasis.frozen_players[victim] then
+        if victim and #victim > 0 and and cloaking.is_cloaked(victim) and
+          stasis.frozen_players[victim] then
             stasis.unfreeze_player(victim)
         end
         
