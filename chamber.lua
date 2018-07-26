@@ -74,7 +74,7 @@ stasis.register_chamber = function(name, def)
         end
         
         -- Knockout integration
-        if knockout and knockout.carrying[victim] then
+        if minetest.get_modpath('knockout') and knockout.carrying[victim] then
             victim = knockout.carrying[victim]
         end
         
