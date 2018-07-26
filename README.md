@@ -50,19 +50,19 @@ While in transit, players are shown a formspec with an option to leave, that
 
 Single-use, requires one glass bottle per use.
 
-![Crafting recipe](chamber mk1.png)
+![Crafting recipe](https://raw.githubusercontent.com/luk3yx/minetest-stasis/master/chamber%20mk1.png)
 
 ### Stasis chamber Mk2
 
 Multiple uses, requires one mese crystal fragment per use.
 
-![Crafting recipe](chamber mk2.png)
+![Crafting recipe](https://raw.githubusercontent.com/luk3yx/minetest-stasis/master/chamber%20mk2.png)
 
 ### Stasis chamber Mk3
 
 Multiple uses, no additional items required.
 
-![Crafting recipe](chamber mk3.png)
+![Crafting recipe](https://raw.githubusercontent.com/luk3yx/minetest-stasis/master/chamber%20mk3.png)
 
 ## TODO
 
