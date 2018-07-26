@@ -66,5 +66,5 @@ Multiple uses, no additional items required.
 
 ## TODO
 
-- Crafting recipes and a wooden stasis chamber that requires some valuable item to use.
-- Better textures
+- Better player texture.
+- Bugfixes.
