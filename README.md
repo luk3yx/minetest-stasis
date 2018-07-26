@@ -44,6 +44,26 @@ To transport a stasis chamber containing a player, you can use node breakers
 While in transit, players are shown a formspec with an option to leave, that
   teleports the player back to the original location of the stasis chamber.
 
+## Crafting
+
+### Stasis chamber Mk1
+
+Single-use, requires one glass bottle per use.
+
+![Crafting recipe](chamber mk1.png)
+
+### Stasis chamber Mk2
+
+Multiple uses, requires one mese crystal fragment per use.
+
+![Crafting recipe](chamber mk2.png)
+
+### Stasis chamber Mk3
+
+Multiple uses, no additional items required.
+
+![Crafting recipe](chamber mk3.png)
+
 ## TODO
 
 - Crafting recipes and a wooden stasis chamber that requires some valuable item to use.

@@ -20,17 +20,58 @@ stasis.register_chamber = function(name, def)
         def.selection_box = def.node_box
         def.paramtype = 'light'
         def.paramtype2 = 'facedir'
+        
+        -- Shorten tiles
+        if not def.tiles[2] then
+            local tile = def.tiles[1] ..
+                '^[colorize:#0008^default_glass.png'
+            def.tiles[2] = def.tiles[1]
+            def.tiles[1] = tile
+        end
+        def.tiles = {
+            def.tiles[1],
+            def.tiles[2], def.tiles[2],
+            def.tiles[2], def.tiles[2],
+            def.tiles[2], def.tiles[2],
+            def.tiles[2],
+        }
+        
+        -- Shorten active tiles
+        if not def.tiles_active then
+            def.tiles_active = {def.tiles[2]}
+        end
+        if not def.tiles_active[2] then
+            local tile = def.tiles_active[1] ..
+                '^[colorize:#0008^stasis_player.png^default_glass.png'
+            def.tiles_active[2] = def.tiles_active[1]
+            def.tiles_active[1] = tile
+        end
+        def.tiles_active = {
+            def.tiles_active[1],
+            def.tiles_active[2], def.tiles_active[2],
+            def.tiles_active[2], def.tiles_active[2],
+            def.tiles_active[2], def.tiles_active[2],
+            def.tiles_active[2],
+        }
     end
     
     local on_rightclick = def.on_rightclick
+    local replace_with
+    if def.replace_with then
+        replace_with = def.replace_with
+    else
+        replace_with = name
+    end
     
     def.on_rightclick = function(pos, node, player)
         if player.is_fake_player then return end
-        if on_rightclick and on_rightclick(pos, node, player) then
-            return
-        end
-        
         local victim = player:get_player_name()
+        
+        if on_rightclick and not stasis.frozen_players[victim] then
+            if on_rightclick(pos, node, player) then
+                return
+            end
+        end
         
         -- Knockout integration
         if knockout and knockout.carrying[victim] then
@@ -46,7 +87,7 @@ stasis.register_chamber = function(name, def)
         local meta = minetest.get_meta(pos)
         meta:set_string('victim', victim)
         
-        stasis.freeze_player(victim, pos, name)
+        stasis.freeze_player(victim, pos, replace_with)
     end
     
     minetest.register_node(':' .. name, def)
@@ -74,7 +115,7 @@ stasis.register_chamber = function(name, def)
         local meta = minetest.get_meta(pos)
         local victim = meta:get_string('victim')
         
-        minetest.swap_node(pos, {name = name, param2 = node.param2})
+        minetest.swap_node(pos, {name = replace_with, param2 = node.param2})
         
         if victim and #victim > 0 and cloaking.is_cloaked(victim) and
           stasis.frozen_players[victim] then
@@ -103,23 +144,17 @@ end
 
 -- The default chamber
 stasis.register_chamber('stasis:chamber', {
-    description = "Admin stasis chamber",
-    tiles = {'default_steel_block.png^[colorize:#0008^default_glass.png',
-             'default_steel_block.png', 'default_steel_block.png',
-             'default_steel_block.png', 'default_steel_block.png',
-             'default_steel_block.png', 'default_steel_block.png',
-             'default_steel_block.png'},
-    tiles_active = {'default_steel_block.png^[colorize:#0008^stasis_player.png^default_glass.png',
-             'default_steel_block.png', 'default_steel_block.png',
-             'default_steel_block.png', 'default_steel_block.png',
-             'default_steel_block.png', 'default_steel_block.png',
-             'default_steel_block.png'},
+    description = "Stasis chamber Mk3",
+    tiles = {
+        'default_steel_block.png',
+    },
+    
     groups = {dig_immediate = 2},
     drawtype = 'stasis_chamber',
     
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
-        meta:set_string('infotext', 'Stasis chamber')
+        meta:set_string('infotext', 'Stasis chamber Mk3')
     end,
     
     --on_rightclick = function(pos, node, player)
