@@ -80,6 +80,11 @@ minetest.register_on_joinplayer(function(player)
         end
     end
     
+    -- Hide formspec
+    if minetest.close_formspec then
+        minetest.close_formspec(victim, 'stasis:end_transit')
+    end
+    
     -- Send chat message and remove table entry
     stasis.frozen_players[victim] = nil
     minetest.chat_send_player(victim, 'You slowly wake up from your time in stasis.')

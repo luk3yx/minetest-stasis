@@ -25,6 +25,7 @@ stasis.register_chamber = function(name, def)
     local on_rightclick = def.on_rightclick
     
     def.on_rightclick = function(pos, node, player)
+        if player.is_fake_player then return end
         if on_rightclick and on_rightclick(pos, node, player) then
             return
         end
