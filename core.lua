@@ -110,13 +110,17 @@ local formspec_transit_end   = 'size[4,2.5]'
     .. 'button_exit[0,0.5;4,1;leave_chamber;Leave stasis chamber]'
     .. 'button_exit[0,1.5;4,1;quit;Remain in stasis]'
 
-stasis.begin_transit = function(victim, chamber)
+stasis.begin_transit = function(victim, chamber, active_chamber)
     if victim and type(victim) ~= 'string' then
         victim = victim:get_player_name()
     end
     
     if not stasis.frozen_players[victim] or not cloaking.is_cloaked(victim) then
         return {name = chamber or 'stasis:chamber'}
+    end
+    
+    if not active_chamber then
+        active_chamber = chamber .. '_active'
     end
     
     minetest.show_formspec(victim, 'stasis:in_transit', formspec_transit_start)
@@ -126,6 +130,7 @@ stasis.begin_transit = function(victim, chamber)
         metadata = minetest.serialize({
             player_in_transit   = victim,
             stasis_chamber      = chamber,
+            active_chamber      = active_chamber,
         }),
     }
 end
@@ -157,8 +162,9 @@ minetest.register_node('stasis:player', {
     
     after_place_node = function(pos, placer, itemstack)
         local metadata = minetest.deserialize(itemstack:get_metadata()) or {}
-        local victim  = metadata.player_in_transit or 'singleplayer'
-        local chamber = metadata.stasis_chamber or 'stasis:chamber'
+        local victim   = metadata.player_in_transit or 'singleplayer'
+        local chamber  = metadata.stasis_chamber or 'stasis:chamber'
+        local active_chamber = metadata.active_chamber or chamber .. '_active'
         local p2 = minetest.get_node(pos).param2
         minetest.set_node(pos, {name = chamber, param2 = p2})
         if minetest.registered_nodes[chamber].on_construct then
@@ -167,7 +173,7 @@ minetest.register_node('stasis:player', {
         local meta = minetest.get_meta(pos)
         meta:set_string('victim', victim)
         if stasis.end_transit(victim, pos) then
-            minetest.swap_node(pos, {name = chamber .. '_active', param2 = p2})
+            minetest.swap_node(pos, {name = active_chamber, param2 = p2})
         end
     end,
 })

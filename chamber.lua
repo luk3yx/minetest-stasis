@@ -134,7 +134,11 @@ stasis.register_chamber = function(name, def)
     end
     
     active_def.after_dig_node = function(pos, oldnode, meta, player)
-        player:get_inventory():add_item('main', stasis.begin_transit(meta.fields.victim, name))
+        player:get_inventory():add_item('main', stasis.begin_transit(
+            meta.fields.victim,
+            replace_with,
+            name .. '_active'
+        ))
     end
     active_def.on_construct = nil
     active_def.on_dig = nil
